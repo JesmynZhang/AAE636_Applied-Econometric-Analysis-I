@@ -1,0 +1,786 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={AAE636\_Assignment5},
+  pdfauthor={Zhijie Zhang},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{AAE636\_Assignment5}
+\author{Zhijie Zhang}
+\date{2023-11-27}
+
+\begin{document}
+\maketitle
+
+This is an \href{http://rmarkdown.rstudio.com}{R Markdown} Notebook.
+When you execute code within the notebook, the results appear beneath
+the code.
+
+Try executing this chunk by clicking the \emph{Run} button within the
+chunk or by placing your cursor inside it and pressing
+\emph{Cmd+Shift+Enter}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(cars)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AAE636_Assignment5_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+Add a new chunk by clicking the \emph{Insert Chunk} button on the
+toolbar or by pressing \emph{Cmd+Option+I}.
+
+When you save the notebook, an HTML file containing the code and output
+will be saved alongside it (click the \emph{Preview} button or press
+\emph{Cmd+Shift+K} to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the
+editor. Consequently, unlike \emph{Knit}, \emph{Preview} does not run
+any R code chunks. Instead, the output of the chunk when it was last run
+in the editor is displayed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Getting sample data.}
+\NormalTok{wagedata }\OtherTok{\textless{}{-}} \FunctionTok{read.dta}\NormalTok{(}\StringTok{\textquotesingle{}/Users/jesmyn/Downloads/cps\_extract\_2003.dta\textquotesingle{}}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(wagedata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "age"      "sex"      "race"     "region"   "educ"     "exper"    "earnings"
+## [8] "weeks"    "hours"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(wagedata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   age sex race region educ exper earnings weeks hours
+## 1  49   2    1      3   12    31    21000    52    40
+## 2  32   1    1      1   18     8   150000    52    50
+## 3  31   2    1      3   14    11    50000    52    50
+## 4  36   2    1      1   14    16    25000    52    40
+## 5  40   1    1      3   11    22    39000    52    50
+## 6  26   1    1      1   16     4    35000    52    45
+\end{verbatim}
+
+\hypertarget{section}{%
+\subsection{0.}\label{section}}
+
+\hypertarget{a.-create-a-variable-that-is-the-log-of-annual-earnings.}{%
+\subsubsection{0.a. Create a variable that is the log of annual
+earnings.}\label{a.-create-a-variable-that-is-the-log-of-annual-earnings.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wagedata}\SpecialCharTok{$}\NormalTok{log\_earnings }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(wagedata}\SpecialCharTok{$}\NormalTok{earnings)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{heteroskedasticity-of-annual-earnings}{%
+\subsection{1. Heteroskedasticity of annual
+earnings}\label{heteroskedasticity-of-annual-earnings}}
+
+\hypertarget{a.}{%
+\subsubsection{1.a.}\label{a.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plotting the data}
+\FunctionTok{plot}\NormalTok{(wagedata}\SpecialCharTok{$}\NormalTok{educ, wagedata}\SpecialCharTok{$}\NormalTok{earnings, }\AttributeTok{xlab =} \StringTok{"Years of Education"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Annual Earnings"}\NormalTok{, }\AttributeTok{main =} \StringTok{"Scatter plot of Earnings by Education"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AAE636_Assignment5_files/figure-latex/unnamed-chunk-5-1.pdf}
+\#Visually examining the plot Based on the scatter plot you provided,
+which shows annual earnings by education, it appears that the variance
+of earnings is not the same for all levels of education. The
+relationship between the variance of earnings and the level of education
+could be that higher education levels are associated with a wider range
+of job types and roles, which may include higher-paying positions that
+also have a higher risk or variability in income (such as executive
+positions, professional jobs, or entrepreneurial ventures). This could
+lead to a greater variance in earnings among individuals with higher
+education levels. Additionally, fields that require higher education
+levels might be more diverse in terms of compensation, leading to
+greater variance. \#Calculating variance for each education level
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+
+\NormalTok{wagedata }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(educ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{variance\_earnings =} \FunctionTok{var}\NormalTok{(earnings))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 12 x 2
+##     educ variance_earnings
+##    <dbl>             <dbl>
+##  1   0           40500000 
+##  2   2.5         79083858.
+##  3   5.5         59002915.
+##  4   7.5        251032398.
+##  5   9          163089624.
+##  6  10          121903287.
+##  7  11          170422353.
+##  8  12          759344947.
+##  9  14         1016574804.
+## 10  16         2291457900.
+## 11  18         6015432112.
+## 12  20         2009826584.
+\end{verbatim}
+
+\#\#\#b.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Estimate the model}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(earnings }\SpecialCharTok{\textasciitilde{}}\NormalTok{ educ, }\AttributeTok{data =}\NormalTok{ wagedata)}
+
+\CommentTok{\# Save the residuals and predicted values}
+\NormalTok{wagedata}\SpecialCharTok{$}\NormalTok{residuals }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(model)}
+\NormalTok{wagedata}\SpecialCharTok{$}\NormalTok{predicted\_earnings }\OtherTok{\textless{}{-}} \FunctionTok{fitted}\NormalTok{(model)}
+
+\CommentTok{\# Plot residuals against education}
+\FunctionTok{plot}\NormalTok{(wagedata}\SpecialCharTok{$}\NormalTok{educ, wagedata}\SpecialCharTok{$}\NormalTok{residuals,}
+     \AttributeTok{xlab =} \StringTok{"Education"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Residuals vs. Education Level"}\NormalTok{)}
+
+\CommentTok{\# Optionally, add a horizontal line at 0 to help interpret the plot}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AAE636_Assignment5_files/figure-latex/unnamed-chunk-7-1.pdf}
+Based on the plot: There isn't a clear funnel shape that would suggest
+an increase or decrease in variance with higher levels of education. The
+spread of residuals appears relatively constant across different levels
+of education. There are some noticeable outliers, particularly at the
+higher end of the education scale. However, outliers alone do not
+necessarily indicate heteroskedasticity. The residuals seem to be
+randomly scattered around the zero line without any systematic pattern
+that increases or decreases with the level of education. This randomness
+is a sign of homoskedasticity. Given these observations, there is no
+strong visual evidence of heteroskedasticity in the data based on this
+plot alone.
+
+\#\#\#c.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(wagedata}\SpecialCharTok{$}\NormalTok{predicted, wagedata}\SpecialCharTok{$}\NormalTok{residuals, }
+     \AttributeTok{xlab =} \StringTok{"Predicted Earnings"}\NormalTok{, }
+     \AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{, }
+     \AttributeTok{main =} \StringTok{"Residuals vs. Predicted Earnings"}\NormalTok{)}
+
+\CommentTok{\# Add a horizontal line at 0 for reference}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AAE636_Assignment5_files/figure-latex/unnamed-chunk-8-1.pdf}
+It seems not hoteroskedasiticity. And look like the result of Part B. it
+could be because the predicted values of earnings are strongly related
+to the level of education, meaning that education is a significant
+predictor of earnings in your model.
+
+\hypertarget{d.}{%
+\subsubsection{d.}\label{d.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Estimate the model}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(earnings }\SpecialCharTok{\textasciitilde{}}\NormalTok{ educ, }\AttributeTok{data =}\NormalTok{ wagedata)}
+
+\CommentTok{\#Conduct the Breusch{-}Pagan test}
+\NormalTok{bp\_test }\OtherTok{\textless{}{-}} \FunctionTok{bptest}\NormalTok{(model, }\AttributeTok{studentize =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\# Display the test results}
+\FunctionTok{print}\NormalTok{(bp\_test)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Breusch-Pagan test
+## 
+## data:  model
+## BP = 522.07, df = 1, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Determine the critical value for the F{-}distribution}
+\CommentTok{\# The degrees of freedom for the model (df1) and residuals (df2)}
+\NormalTok{df1 }\OtherTok{\textless{}{-}}\NormalTok{ bp\_test}\SpecialCharTok{$}\NormalTok{parameter}
+\NormalTok{df2 }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(model}\SpecialCharTok{$}\NormalTok{residuals) }\SpecialCharTok{{-}}\NormalTok{ df1 }\SpecialCharTok{{-}} \DecValTok{1}
+
+\CommentTok{\# The critical value at the 0.05 significance level}
+\NormalTok{critical\_value }\OtherTok{\textless{}{-}} \FunctionTok{qf}\NormalTok{(}\FloatTok{0.95}\NormalTok{, df1, df2)}
+
+\CommentTok{\# Display the critical value}
+\FunctionTok{print}\NormalTok{(critical\_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.84574
+\end{verbatim}
+
+For a chi-squared distribution with 1 degree of freedom, the critical
+value at the α = 0.05 level is approximately 3.841. since the BP test
+statistic of 522.07 is far greater than the critical value of
+approximately 3.841, and the p-value is less than 0.05, you can reject
+the null hypothesis of homoskedasticity.
+
+\hypertarget{e.}{%
+\subsubsection{e.}\label{e.}}
+
+The decision rule for the LM test is similar to that of any chi-squared
+test: If the LM statistic is greater than the critical value from the
+chi-squared distribution with the corresponding degrees of freedom, we
+reject the null hypothesis of homoskedasticity (constant variance).
+Alternatively, if the p-value is less than the significance level (α),
+we also reject the null hypothesis.
+
+The critical value for the LM test can be found in a chi-squared
+distribution table or calculated using statistical software. With 1
+degree of freedom, at the 0.05 significance level (α = 0.05), the
+critical value is approximately 3.841 (as mentioned previously).
+
+Given that the LM statistic (BP = 522.07) is much larger than the
+critical value of 3.841, and the p-value is virtually zero (\textless{}
+2.2e-16), you would reject the null hypothesis of homoskedasticity in
+favor of the alternative hypothesis that there is heteroskedasticity in
+the model.
+
+\hypertarget{f.}{%
+\subsubsection{f.}\label{f.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(earnings }\SpecialCharTok{\textasciitilde{}}\NormalTok{ educ, }\AttributeTok{data =}\NormalTok{ wagedata)}
+
+\CommentTok{\# Calculate White\textquotesingle{}s heteroskedasticity{-}consistent standard errors}
+\NormalTok{robust\_se }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(}\FunctionTok{vcovHC}\NormalTok{(model, }\AttributeTok{type =} \StringTok{"HC"}\NormalTok{)))}
+
+\CommentTok{\# The standard error for Alpha\^{}1 (the coefficient of educ)}
+\NormalTok{se\_Alpha1\_robust }\OtherTok{\textless{}{-}}\NormalTok{ robust\_se[}\StringTok{\textquotesingle{}educ\textquotesingle{}}\NormalTok{]}
+
+\CommentTok{\# Compare to the original standard error}
+\NormalTok{se\_Alpha1\_original }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model)}\SpecialCharTok{$}\NormalTok{coefficients[}\StringTok{\textquotesingle{}educ\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Std. Error\textquotesingle{}}\NormalTok{]}
+
+\CommentTok{\# Use coeftest to get the t{-}statistic with robust standard errors}
+\NormalTok{t\_test\_robust }\OtherTok{\textless{}{-}} \FunctionTok{coeftest}\NormalTok{(model, }\AttributeTok{vcov =} \FunctionTok{vcovHC}\NormalTok{(model, }\AttributeTok{type =} \StringTok{"HC"}\NormalTok{))}
+\FunctionTok{print}\NormalTok{(t\_test\_robust)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##              Estimate Std. Error t value  Pr(>|t|)    
+## (Intercept) -26097.25    4383.48 -5.9535 3.051e-09 ***
+## educ          4745.21     353.57 13.4208 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extract the t{-}statistic for Alpha\^{}1}
+\NormalTok{t\_stat\_Alpha1\_robust }\OtherTok{\textless{}{-}}\NormalTok{ t\_test\_robust[}\DecValTok{2}\NormalTok{, }\StringTok{"t value"}\NormalTok{]}
+\FunctionTok{print}\NormalTok{(t\_stat\_Alpha1\_robust)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13.42075
+\end{verbatim}
+
+The corrected standard error for \(\hat{\alpha}_1\) using White's
+heteroskedasticity-consistent method is 353.57.
+
+The initial standard error from the model estimation before using
+White's method is not directly provided in your output, but can compare
+this robust standard error (353.57) to whatever the original standard
+error was. If it is larger after using White's method, this would be
+indicative that heteroskedasticity was present in the residuals and that
+the OLS standard errors were underestimated.
+
+The t-statistic for \(\hat{\alpha}_1\) after using White's method is
+13.4208, which is incredibly high and suggests that education is
+significantly associated with earnings. This t-statistic should be
+compared to the t-statistic from the original model estimation. If it is
+lower than the original t-statistic, this would be expected because the
+robust standard errors are generally larger, reducing the t-statistic
+value. However, even if the t-statistic is lower, as long as it is above
+the critical value (usually around 1.96 for a 95\% confidence level with
+a large sample size), the coefficient is still statistically
+significant.
+
+\#\#\#g.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wagedata }\OtherTok{\textless{}{-}}\NormalTok{ wagedata[wagedata}\SpecialCharTok{$}\NormalTok{educ }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{, ]}
+
+\CommentTok{\# For OLS}
+\NormalTok{ols\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(earnings }\SpecialCharTok{\textasciitilde{}}\NormalTok{ educ, }\AttributeTok{data =}\NormalTok{ wagedata)}
+\NormalTok{summary\_ols }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(ols\_model)}
+
+\CommentTok{\# For WLS}
+\NormalTok{wls\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(earnings }\SpecialCharTok{\textasciitilde{}}\NormalTok{ educ, }\AttributeTok{data =}\NormalTok{ wagedata, }\AttributeTok{weights =} \DecValTok{1}\SpecialCharTok{/}\NormalTok{(educ}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\NormalTok{summary\_wls }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(wls\_model)}
+
+\CommentTok{\# Now you can compare the standard errors}
+\NormalTok{se\_ols }\OtherTok{\textless{}{-}}\NormalTok{ summary\_ols}\SpecialCharTok{$}\NormalTok{coefficients[}\StringTok{"educ"}\NormalTok{, }\StringTok{"Std. Error"}\NormalTok{]}
+\NormalTok{se\_wls }\OtherTok{\textless{}{-}}\NormalTok{ summary\_wls}\SpecialCharTok{$}\NormalTok{coefficients[}\StringTok{"educ"}\NormalTok{, }\StringTok{"Std. Error"}\NormalTok{]}
+
+\CommentTok{\# And you can compare the coefficient estimates themselves}
+\NormalTok{alpha1\_ols }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(ols\_model)[}\StringTok{"educ"}\NormalTok{]}
+\NormalTok{alpha1\_wls }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(wls\_model)[}\StringTok{"educ"}\NormalTok{]}
+
+\CommentTok{\# Print the results}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"OLS estimate of alpha1:"}\NormalTok{, alpha1\_ols, }\StringTok{"with SE:"}\NormalTok{, se\_ols))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "OLS estimate of alpha1: 4827.37492251037 with SE: 312.788649056306"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"WLS estimate of alpha1:"}\NormalTok{, alpha1\_wls, }\StringTok{"with SE:"}\NormalTok{, se\_wls))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "WLS estimate of alpha1: 2552.00805695515 with SE: 137.799326340283"
+\end{verbatim}
+
+Comparing the estimates:
+
+\begin{itemize}
+\tightlist
+\item
+  The WLS estimate for \(\alpha_1\) is significantly lower than the OLS
+  estimate. This suggests that after accounting for the
+  heteroskedasticity by using weights in WLS, the impact of education on
+  earnings is assessed to be less than what the OLS estimate suggested.
+\end{itemize}
+
+Comparing the standard errors:
+
+\begin{itemize}
+\tightlist
+\item
+  The standard error from the WLS estimation is smaller than the
+  standard error from the OLS estimation. This was expected because WLS
+  adjusts for the non-constant variance in errors associated with
+  different levels of education, providing a more precise estimate of
+  the coefficient's standard error.
+\end{itemize}
+
+Finding smaller standard errors with WLS is consistent with the fact
+that WLS provides more efficient estimates under heteroskedasticity.
+Since the form of heteroskedasticity was known and specified as being
+proportional to the square of the education level, WLS was able to
+properly weight the observations to account for the non-constant
+variance. This is why would expect to find smaller standard errors with
+WLS in such a situation.
+
+The result demonstrates that when the correct model of
+heteroskedasticity is known and used in WLS, it can yield more reliable
+estimates (in the sense of having potentially lower standard errors)
+compared to OLS, which assumes constant variance across all
+observations.
+
+\#\#\#h.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Assuming you have an \textquotesingle{}ols\_model\textquotesingle{} from previous OLS regression}
+\NormalTok{ols\_resid }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(ols\_model)}\SpecialCharTok{\^{}}\DecValTok{2}
+
+\CommentTok{\# Regress the log of the squared residuals on Education to estimate the variance parameters}
+\NormalTok{resid\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(ols\_resid) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ educ, }\AttributeTok{data =}\NormalTok{ wagedata)}
+
+\CommentTok{\# Calculate the predicted log variance and take the exponential to get predicted variance}
+\NormalTok{predicted\_log\_variance }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(resid\_model, }\AttributeTok{newdata =}\NormalTok{ wagedata)}
+\NormalTok{predicted\_variance }\OtherTok{\textless{}{-}} \FunctionTok{exp}\NormalTok{(predicted\_log\_variance)}
+
+\CommentTok{\# Use the predicted variance to get weights for the FGLS estimation}
+\NormalTok{weights\_fglm }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{/}\NormalTok{ predicted\_variance}
+
+\CommentTok{\# Fit the WLS model using these new weights}
+\NormalTok{fgls\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(earnings }\SpecialCharTok{\textasciitilde{}}\NormalTok{ educ, }\AttributeTok{data =}\NormalTok{ wagedata, }\AttributeTok{weights =}\NormalTok{ weights\_fglm)}
+
+\CommentTok{\# Obtain the FGLS estimate for alpha\_1}
+\NormalTok{alpha1\_fgls }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(fgls\_model)[}\StringTok{"educ"}\NormalTok{]}
+
+\CommentTok{\# Obtain the standard error for alpha\_1 from the FGLS model}
+\NormalTok{summary\_fgls }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(fgls\_model)}
+\NormalTok{se\_alpha1\_fgls }\OtherTok{\textless{}{-}}\NormalTok{ summary\_fgls}\SpecialCharTok{$}\NormalTok{coefficients[}\StringTok{"educ"}\NormalTok{, }\StringTok{"Std. Error"}\NormalTok{]}
+
+\CommentTok{\# Compare to the standard error from part F (assuming \textquotesingle{}se\_alpha1\_gls\textquotesingle{} is stored)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"GLS standard error of alpha1:"}\NormalTok{,t\_stat\_Alpha1\_robust))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "GLS standard error of alpha1: 13.4207520260071"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"FGLS standard error of alpha1:"}\NormalTok{, se\_alpha1\_fgls))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "FGLS standard error of alpha1: 219.839664549723"
+\end{verbatim}
+
+\#\#\#i.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Transform the dataset by adding the log of earnings}
+\NormalTok{transformed\_data }\OtherTok{\textless{}{-}}\NormalTok{ wagedata }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log\_earnings =} \FunctionTok{log}\NormalTok{(earnings))}
+
+\CommentTok{\# Estimate the model}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(log\_earnings }\SpecialCharTok{\textasciitilde{}}\NormalTok{ educ, }\AttributeTok{data =}\NormalTok{ transformed\_data)}
+
+\CommentTok{\# Save the residuals}
+\NormalTok{residuals }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(model)}
+
+\CommentTok{\# Plot the residuals against education}
+\FunctionTok{plot}\NormalTok{(transformed\_data}\SpecialCharTok{$}\NormalTok{educ, residuals,}
+     \AttributeTok{xlab =} \StringTok{"Education"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Residuals vs. Education"}\NormalTok{)}
+
+\CommentTok{\# Optionally, add a horizontal line at 0 to help interpret the plot}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AAE636_Assignment5_files/figure-latex/unnamed-chunk-13-1.pdf}
+Based on this plot alone, there is no clear visual evidence of
+heteroskedasticity, there does not appear to be a clear pattern of
+increasing or decreasing spread of the residuals as education changes.
+The spread seems fairly consistent across different levels of education.
+
+\hypertarget{j.}{%
+\subsubsection{j.}\label{j.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Fit the model for the log of earnings}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(earnings) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ educ, }\AttributeTok{data =}\NormalTok{ wagedata)}
+
+\CommentTok{\# Perform the Breusch{-}Pagan test}
+\NormalTok{bp\_test }\OtherTok{\textless{}{-}} \FunctionTok{bptest}\NormalTok{(model)}
+
+\CommentTok{\# Output the results of the test}
+\FunctionTok{print}\NormalTok{(bp\_test)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  studentized Breusch-Pagan test
+## 
+## data:  model
+## BP = 1.2261, df = 1, p-value = 0.2682
+\end{verbatim}
+
+the null hypothesis : the residuals are homoskedastic. Decision Rule:
+-If the p-value obtained from bp\_test is less than 0.05, reject the
+null hypothesis, which suggests the presence of heteroskedasticity in
+the residuals. -If the p-value is greater than 0.05, you do not reject
+the null hypothesis, which suggests that the residuals are
+homoskedastic.
+
+The result from the Breusch-Pagan test provided in the image indicates a
+BP statistic of 1.2261 with 1 degree of freedom and a p-value of 0.2682.
+
+Based on this result, at the 5\% level of significance (α = 0.05), you
+would not reject the null hypothesis of homoskedasticity because the
+p-value is greater than 0.05. This means that there is no statistically
+significant evidence of heteroskedasticity in the residuals from your
+regression model, according to the Breusch-Pagan test. Thus, based on
+this test, the residuals can be considered homoskedastic.
+
+\hypertarget{section-1}{%
+\subsection{2.}\label{section-1}}
+
+\hypertarget{a.-1}{%
+\subsubsection{2.a.}\label{a.-1}}
+
+Given that the error terms are homoskedastic and uncorrelated, the
+variance of \(\bar{u}_i\) can be calculated as follows:
+
+\[ \text{Var}(\bar{u}_i) = \text{Var}\left(\frac{1}{m_i} \sum_{e=1}^{m_i} u_{i,e}\right) \]
+
+Since the error terms are independent and each has a variance of
+\(\sigma^2\), and because variance is a linear operator with constants
+taken out squared, we have:
+
+\[ \text{Var}(\bar{u}_i) = \frac{1}{m_i^2} \sum_{e=1}^{m_i} \text{Var}(u_{i,e}) \]
+\[ \text{Var}(\bar{u}_i) = \frac{1}{m_i^2} \sum_{e=1}^{m_i} \sigma^2 \]
+\[ \text{Var}(\bar{u}_i) = \frac{1}{m_i^2} \cdot m_i \cdot \sigma^2 \]
+\[ \text{Var}(\bar{u}_i) = \frac{\sigma^2}{m_i} \]
+
+So, the variance of the average error within a firm is indeed
+\(\sigma^2 / m_i\), which shows that averaging the errors within a firm
+reduces the variance by a factor equal to the number of employees within
+the firm. This reduction in variance is due to the averaging process,
+which ``cancels out'' the uncorrelated individual errors when they are
+summed.
+
+\hypertarget{b.}{%
+\subsubsection{2.b.}\label{b.}}
+
+The relevance of the first part is discussed in the context of WLS
+estimation using data averaged at the firm level. Since the variance of
+the average error term within a firm is \(\sigma^2 / m_i\), when
+performing WLS, the weight for observation \(i\) (representing a firm)
+would be the reciprocal of this variance, which is proportional to the
+firm size \(m_i\). Therefore, larger firms (with more employees and
+hence a larger \(m_i\)) would have smaller variances of their average
+error terms and should be given more weight in the WLS regression
+because their data points are more `reliable' due to the averaging of
+more observations, which reduces the variance of the error term.
+
+In WLS, weights are used to account for different variances among
+observations, with larger weights being associated with observations
+with smaller variances. Using the firm size as the weight in WLS
+accounts for the differing information content and precision of the
+firm-level averages, leading to a potentially more efficient estimation
+of the regression coefficients than would be achieved by ordinary least
+squares (OLS), which does not account for this heterogeneity in
+precision across firms.
+
+To summarize, the firm-level regression would use \(m_i\) as weights in
+WLS estimation because this will correct for the differences in the
+precision of the firm-level average observations, leading to a more
+efficient and reliable estimation of the regression coefficients.
+
+\hypertarget{section-2}{%
+\subsection{3.}\label{section-2}}
+
+\hypertarget{i.}{%
+\subsubsection{i.}\label{i.}}
+
+If \(\text{Var}(f_i) = \sigma_f^2\),
+\(\text{Var}(\upsilon_{i,e}) = \sigma_\upsilon^2\), and \(f_i\) and
+\(\upsilon_{i,e}\) are uncorrelated, then the variance of the composite
+error term \(u_{i,e}\) is:
+
+\[ \text{Var}(u_{i,e}) = \text{Var}(f_i + \upsilon_{i,e}) = \text{Var}(f_i) + \text{Var}(\upsilon_{i,e}) \]
+
+Since \(f_i\) and \(\upsilon_{i,e}\) are uncorrelated, their covariances
+are zero, and the variances add up. Therefore:
+
+\[ \text{Var}(u_{i,e}) = \sigma_f^2 + \sigma_\upsilon^2 \]
+
+\hypertarget{ii.}{%
+\subsubsection{ii.}\label{ii.}}
+
+Since \(\upsilon_{i,e}\) and \(\upsilon_{i,g}\) are uncorrelated for
+\(e \neq g\), their covariance is zero:
+
+\[ \text{Cov}(\upsilon_{i,e}, \upsilon_{i,g}) = 0 \]
+
+\#\#\#iii. To find the variance of \(\bar{u}_i\), the average of the
+composite errors within a firm:
+
+Let \(\bar{u}_i = \frac{1}{m_i} \sum_{e=1}^{m_i} u_{i,e}\), where
+\(u_{i,e} = f_i + \upsilon_{i,e}\).
+
+Since \(f_i\) is constant for all employees within firm \(i\), it comes
+out of the sum unchanged when averaging. The \(\upsilon_{i,e}\) terms,
+being uncorrelated and having the same variance \(\sigma_\upsilon^2\),
+sum to a variance that is \(\sigma_\upsilon^2 / m_i\) due to the
+averaging. Thus, the variance of \(\bar{u}_i\) is:
+
+\[ \text{Var}(\bar{u}_i) = \text{Var}(f_i) + \frac{1}{m_i^2} \sum_{e=1}^{m_i} \text{Var}(\upsilon_{i,e}) \]
+\[ \text{Var}(\bar{u}_i) = \sigma_f^2 + \frac{1}{m_i^2} \cdot m_i \cdot \sigma_\upsilon^2 \]
+\[ \text{Var}(\bar{u}_i) = \sigma_f^2 + \frac{\sigma_\upsilon^2}{m_i} \]
+
+\#\#\#iv. The relevance of part iii for WLS estimation using data
+averaged at the firm level is that it provides a rationale for the
+weights to be used in the estimation. Since the variance of the average
+error term within a firm is
+\(\sigma_f^2 + \frac{\sigma_\upsilon^2}{m_i}\), when performing WLS, you
+would use weights that are inversely proportional to this variance. This
+would give more weight to firms with more employees (larger \(m_i\)), as
+the variance due to \(\upsilon_{i,e}\) becomes smaller with more
+employees. The firm effect variance \(\sigma_f^2\) remains constant
+across firms and does not affect the weighting.
+
+In WLS, the use of these weights allows for more efficient estimation of
+the regression coefficients by giving relatively more importance to less
+noisy observations---those from larger firms in this case. The standard
+errors derived from this WLS estimation will reflect this efficiency and
+will typically be smaller than those from an OLS estimation that does
+not account for heteroskedasticity.
+
+\#\#. b
+
+\hypertarget{i.-1}{%
+\subsubsection{i.}\label{i.-1}}
+
+This question asks you to consider the theoretical impact of executions
+on murder rates. If past executions deter future murders, then
+\(\beta_1\) should be negative (as more executions would correlate with
+fewer murders). \(\beta_2\) should also presumably be negative if
+unemployment is thought to increase the murder rate, assuming that
+higher unemployment leads to higher crime rates due to economic
+desperation or other factors.
+
+\#\#\#ii. This would involve estimating the given equation for the years
+1990 and 1993 using pooled OLS (Ordinary Least Squares) and commenting
+on the deterrent effect based on the sign and significance of
+\(\beta_1\).
+
+\#\#\#iii. Here, you would apply fixed effects estimation, likely
+through first-differencing if you are only using two years of data. This
+controls for time-invariant state effects by examining how changes
+within each state over time relate to changes in the murder rate. You
+would then interpret the deterrent effect based on the estimation.
+
+\#\#\#iv. Computing heteroskedasticity-robust standard errors is a
+common procedure to correct for non-constant variance in the error term
+of a regression model. This would be done in statistical software by
+specifying the robust option when estimating the model.
+
+\#\#\#v. To find the state with the largest number of executions, you
+would need to analyze the dataset directly, summing the execution counts
+for 1991, 1992, and 1993, and comparing across states.
+
+\#\#\#vi. First-differencing is a method to control for unobserved state
+effects by looking at the changes in variables over time, and dropping
+Texas might be due to its outlier status in terms of execution counts.
+After re-estimating the equation, you'd interpret the results, paying
+attention to changes in the estimated coefficients and standard errors.
+
+\#\#\#vii. This would involve running a fixed effects model including
+all three years of data and discussing the impact of including Texas in
+the analysis on the size and significance of the deterrent effect
+coefficient.
+
+\end{document}

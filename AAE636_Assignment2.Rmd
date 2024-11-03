@@ -1,0 +1,596 @@
+---
+title: "AAE636 Assignment2"
+author: "Zhijie Zhang"
+date: "2023-10-05"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## 1. Confidence intervals
+```{r}
+data <- read.csv("~/Desktop/WAGE23.csv")
+#Using the years of education variable, create the following four categories:
+high_school_dropout <- data[data$educ<12,]
+high_school_grads <- data[data$educ == 12, ]
+some_college <- data[data$educ>=13&data$educ<=15,]
+college_grads <- data[data$educ >= 16, ]
+```
+### a. BY HAND (i.e. show all steps involved to create), calculate a 95% confidence interval for the average monthly wages for college graduates
+Get number of observations
+$$
+\bar X \pm t * (s / \sqrt n)
+$$
+Where:
+- $\bar X$ is the sample mean (average monthly wage).
+- $t$ is the critical t-value for the desired confidence level and degrees of freedom.
+- $s$ is the sample standard deviation.
+- $n$ is the sample size.
+
+Create the t-distribution:
+Step1. Calculate sample mean and standard deviation 
+```{r}
+sample_mean_college <- mean(college_grads$wage, na.rm = TRUE)
+sample_sd_college <- sd(college_grads$wage, na.rm = TRUE)
+n_college <- length(college_grads$wage)
+```
+- $\bar X = 1178.383$
+- $s = 443.4408$ 
+- $n = 201$
+Step2. Set the confidence level and degrees of freedom
+   Degrees of freedom is 201 - 1 = 200.
+   
+```{r}
+confidence_level <- 0.95
+df <- n_college - 1  # Degrees of freedom
+```
+Step3. Find the critical t-value
+```{r}
+critical_t_value <- qt((1 + confidence_level) / 2, df)
+critical_t_value
+```
+the t-value is 1.971896.
+
+Step4. Calculate the confidence interval
+```{r}
+margin_of_error <- critical_t_value * (sample_sd_college / sqrt(n_college))
+confidence_interval <- c(sample_mean_college - margin_of_error, sample_mean_college + margin_of_error)
+```
+Final 95% Confidence Interval : [1116.706, 1240.06]
+
+### b. Explain in words what the result in part (a) tells us about the true expected value of average monthly wages for college graduates:
+//Anwser:
+//In this result, based on a sample of 201 college graduates, the estimated average monthly wage is approximately $1178.38. The standard error is 31.28, indicating the level of variability we might expect when estimating the average wage from different samples. The 95% confidence interval (1116.71 to 1240.06) provides a range within which we can reasonably be confident that the true average monthly wage for all college graduates falls. In simple terms, there is a 95% probability that the true average monthly wage for all college graduates lies within the range of approximately $1116.71 to $1240.06.
+
+### c. Calculate a 99% confidence interval for the average monthly wages for high school graduates (exactly 12 years of education).
+
+Calculate sample mean and standard deviation 
+```{r}
+sample_mean_high_school <- mean(high_school_grads$wage, na.rm = TRUE)
+sample_sd_high_school <- sd(high_school_grads$wage, na.rm = TRUE)
+n_high_school <- length(high_school_grads$wage)
+```
+- $\bar X = 861.0708$
+- $s = 326.8476$ 
+- $n = 325$
+
+Set the confidence level and degrees of freedom
+```{r}
+confidence_level_99 <- 0.99
+df_high_school <- n_high_school - 1
+```
+
+Find the critical t-value 
+```{r}
+critical_t_value_99 <- qt((1 + confidence_level_99) / 2, df_high_school)
+critical_t_value_99
+```
+the critical t-value for 99% confidence is 2.591088
+
+
+Calculate the confidence interval:
+```{r}
+margin_of_error_99 <- critical_t_value_99 * (sample_sd_high_school / sqrt(n_high_school))
+confidence_interval_99 <- c(sample_mean_high_school - margin_of_error_99, sample_mean_high_school + margin_of_error_99)
+```
+99% Confidence Interval: [814.0937, 908.0478]
+
+## 2. Hypothesis Testing
+
+### a. Test the hypothesis that the mean monthly wages of college graduates are $1,100.
+
+Null Hypothesis ($H_0$):$\mu = 1100$ 
+
+Alternative Hypothesis ($H_a$): $\mu ≠ 1100$
+
+Decision Rule:accpet a two-tailed test at the 5% level of significance ($\alpha = 0.05$). If $|t|>t_{critical}$, and reject the null hypothesis; otherwise,  it is failing
+
+
+Calculate the sample mean ($\bar X$) and sample standard deviation ($s$)
+```{r}
+sample_mean_college <- mean(college_grads$wage, na.rm = TRUE)
+sample_mean_college
+sample_sd_college <- sd(college_grads$wage, na.rm = TRUE)
+n_college <- length(college_grads$wage)
+sample_sd_college
+```
+
+ Calculating degrees of freedom:
+```{r}
+df_college <- n_college - 1
+```
+
+Finding the critical t-value
+```{r}
+confidence_level <- 0.95
+alpha <- 1 - confidence_level
+t_critical <- qt(1 - alpha / 2, df_college)
+t_critical
+```
+
+Calculate the t-statistic
+$$
+SE = \frac {s}{\sqrt n}
+$$
+```{r}
+se_college <- sample_sd_college / sqrt(n_college)
+se_college
+```
+$$
+t = \frac{\bar x - \mu}{SE}
+$$
+```{r}
+t_stat_college <- (sample_mean_college - 1100) / se_college
+
+t_stat_college
+```
+
+Because the result shows that $|t|>t_{critical}$, so  reject the null hypothesis.
+
+### b. Test the hypothesis that the mean monthly wages of married individuals with some college are $1,000.
+```{r}
+married_some_college <- data[data$married == 1 & data$educ >= 13 & data$educ <= 15, ]
+```
+
+Calculate the sample mean ($\bar X$) and sample standard deviation ($s$)
+```{r}
+sample_mean_married_some_college <- mean(married_some_college$wage, na.rm = TRUE)
+sample_sd_married_some_college <- sd(married_some_college$wage, na.rm = TRUE)
+n_married_some_college <- length(married_some_college$wage)
+```
+Calculating degrees of freedom: $df = n - 1$
+```{r}
+df_married_some_college <- n_married_some_college - 1
+```
+ Finding the critical t-value
+```{r}
+confidence_level <- 0.95
+alpha <- 1 - confidence_level
+t_critical <- qt(1 - alpha / 2, df_married_some_college)
+t_critical
+```
+Calculate the t-statistic
+$$
+SE = \frac {s}{\sqrt n}
+$$
+```{r}
+se_married_some_college <- sample_sd_married_some_college / sqrt(n_married_some_college)
+se_married_some_college
+```
+$$
+t = \frac{\bar x - \mu}{SE}
+$$
+```{r}
+t_stat_college <- (sample_mean_married_some_college - 1000) / se_married_some_college
+
+t_stat_college
+```
+
+The result show that $|t|<t_{critical}$, it cannot reject the null hypothesis, which means the mean monthly wages of married individuals with some college are equal to $1,000.
+
+## 3. Calculating p-values
+
+### a. Calculate the p-value for the sample mean monthly wages of high school graduates assuming the true mean monthly wages are $900
+
+$H_0: \mu = 900$
+
+$H_a: \mu ≠ 900$
+
+Calculate the test statistic:
+$$
+z = \frac{\bar X - \mu}{s /\ \sqrt n}
+$$
+```{r}
+sample_mean_high_school <- mean(high_school_grads$wage, na.rm = TRUE)
+sample_sd_high_school <- sd(high_school_grads$wage, na.rm = TRUE)
+n_high_school <- length(high_school_grads$wage)
+
+z_score_a <- (sample_mean_high_school - 900) / (sample_sd_high_school / sqrt(n_high_school))
+
+```
+
+z-score: -0.2930534
+
+Calculate the p-value:
+```{r}
+p_value_a <- 2 * (1 - pnorm(abs(z_score_a)))
+p_value_a
+```
+
+The resulting p-value means that the  average monthly wage for high school graduates is $900. The p-value is 0.0317775 and less than 0.05, which means evidence against the null hypothesis.
+
+### b. Calculate the p-value for the sample mean monthly wages of unmarried individuals assuming the true mean monthly wages are $750
+
+$H_0: \mu = 750$
+
+$H_a: \mu ≠ 750$
+
+```{r}
+sample_mean_unmarried <- mean(data$wage[data$married == 0], na.rm = TRUE)
+sample_sd_unmarried <- sd(data$wage[data$married == 0], na.rm = TRUE)
+n_unmarried <- sum(data$married == 0)
+z_score_b <- (sample_mean_unmarried - 750) / (sample_sd_unmarried / sqrt(n_unmarried))
+p_value_b <- 2 * (1 - pnorm(abs(z_score_b)))
+```
+
+z-score: 0.7933503 
+
+p-value: 0.4275738
+
+## 4. Relationship between wages and experience for high school graduates.
+
+### a. Plot wages against experience and assess the correlation
+
+```{r}
+high_school_grads <- data[data$educ == 12, ]
+plot(high_school_grads$exper, high_school_grads$wage, xlab = "Experience", ylab = "Wages")
+```
+so it repest a weak positive correlation.
+
+### b. Calculate the sample means and standard deviations
+```{r}
+mean_wages <- mean(high_school_grads$wage, na.rm = TRUE)
+mean_experience <- mean(high_school_grads$exper, na.rm = TRUE)
+sd_wages <- sd(high_school_grads$wage, na.rm = TRUE)
+sd_experience <- sd(high_school_grads$exper, na.rm = TRUE)
+```
+Sample Mean of Wages: 861.0708
+Sample Standard Deviation of Wages: 326.8476 
+Sample Mean of Experience: 13.21846 
+Sample Standard Deviation of Experience: 4.239544 
+
+### c. Calculate the covariance and correlation between wages and experience
+```{r}
+covariance_wages_experience <- cov(high_school_grads$wage, high_school_grads$exper, use = "complete.obs")
+correlation_wages_experience <- cor(high_school_grads$wage, high_school_grads$exper, use = "complete.obs")
+```
+
+Covariance: 255.7499 
+Correlation: 0.1845657
+
+### d. Calculate the covariance and correlation between tenure and experience
+```{r}
+covariance_tenure_experience <- cov(high_school_grads$tenure, high_school_grads$exper, use = "complete.obs")
+correlation_tenure_experience <- cor(high_school_grads$tenure, high_school_grads$exper, use = "complete.obs")
+```
+
+Covariance between: 6.57264 
+Correlation between: 0.2788507
+
+### e. Calculate OLS regression coefficients for wage on experience
+
+following formulas:
+$$
+\hat \beta_1 = \frac{Cov(Wage, Exper)}{Var(Exper)}
+$$
+$$
+\hat \beta_0 = Mean(Wage) - \hat \beta_1 * Mean(Exper)
+$$
+```{r}
+beta_1 <- covariance_wages_experience / var(high_school_grads$exper, na.rm = TRUE)
+beta_0 <- mean_wages - beta_1 * mean_experience
+```
+
+OLS Regression Coefficient/Intercept: 672.984 
+OLS Regression Coefficient/Slope: 14.22909
+
+### f. Interpret the estimated coefficient
+
+The estimated coefficient is 14.22909 and represents the change in wages for each additional year to experience for high school graduates. 
+
+Since $\hat \beta_1$ is positive, so if a high school graduates is more experience, she/he wages tend to increase.
+
+### g. Expectations of causality
+
+Because correlation between tenure and work experience is 0.2788507, the positive correlation between tenure and experience means with more years of experience, and longer tenure. 
+
+A positive correlation between tenure and experience may is that more experienced individuals are more likely to stay with the same employer longer. 
+
+### h.
+
+```{r}
+model <- lm(wage ~ exper, data = high_school_grads)
+summary(model)
+```
+the estimated variance of the error term  $\hat \sigma^2 = 321.7^2$
+### i.
+Var($\hat \beta_1$) can be calculated as:
+$$
+Var(\hat \beta_1) = \frac{\hat \sigma^2}{\sum_{i=1}^{n}(x_i-\bar x)^2}
+$$
+Var($\hat \beta_0$) can be calculated as:
+
+$$
+Var(\hat \beta_0) = \hat \sigma^2*(1/n+\frac{\bar x^2}{\sum_{i=1}^{n}(x_i-\bar x)^2})
+$$
+```{r}
+sigma_hat_squared <- 321.7 * 321.7
+SE_beta_0 <- 58.517
+SE_beta_1 <- 4.216
+n <- 325
+
+Var_beta_1 <- sigma_hat_squared / sum((high_school_grads$exper - mean(high_school_grads$exper))^2)
+
+Var_beta_0 <- sigma_hat_squared*(1/n+mean(high_school_grads$exper)^2/sum((high_school_grads$exper - mean(high_school_grads$exper))^2))
+```
+
+Variance of beta_0: 3423.57 
+Variance of beta_1: 17.77129 
+
+### j.
+
+The 95% confidence interval for $\hat \beta_1$ :
+$$
+\hat \beta_1 \pm t_{\alpha/2,n-2} *SE(\hat \beta_1)
+$$
+```{r}
+alpha <- 0.05
+t_critical <- qt(1 - alpha/2, df = n - 2)
+
+CI_lower <- 14.229 - t_critical * SE_beta_1
+CI_upper <- 14.229 + t_critical * SE_beta_1
+```
+
+95% Confidence Interval for beta_1: [ 5.934713 , 22.52329 ]
+
+## 5. Relationship between wages and experience for college graduates.
+### a. OLS estimates of the intercept and slope terms for the regression of wages on experience
+```{r}
+college_some <- data[data$educ >= 13 & data$educ <= 15, ]
+model <- lm(wage ~ exper, data = college_some)
+intercept <- coef(model)[1]
+slope <- coef(model)[2]
+```
+
+OLS Regression Coefficient (Intercept): 727.6407 
+OLS Regression Coefficient (Slope): 24.26838
+
+### b. Test the null hypothesis that the intercept parameter is zero at α = 0.10 level of confidence
+
+$H_0: \beta_0 = 0$
+
+$H_a: \beta_0 ≠ 0$
+
+If the p-value <= $\alpha = 0.1$, reject the null hypothesis.If the p-value > $\alpha$, accept the null hypothesis.
+
+```{r}
+summary(model)
+```
+ p-value = 3.97e-15 and this is less than $\alpha = 0.1$, so reject the null hypothesis.
+
+### c. Test the null hypothesis that the slope parameter is zero at α = 0.01 level of confidence
+
+$H_0: \beta_1 = 0$
+
+$H_a: \beta_1 ≠ 0$
+
+By a hypothesis test with a significance level of$\alpha = 0.01$ to test this hypothesis, The decision rule is similar to part (b).
+
+And p-value = 0.00276 is less than $\alpha = 0.01$, reject the null hypothesis.
+
+### d. Calculate SST, SSE, and SSR:
+
+- SST
+$$
+SST = \sum(Y_i-\bar Y)^2
+$$
+- SSE
+$$
+SSE = \sum(Y_i-\hat Y_i)^2
+$$- SSR (Regression Sum of Squares): This measures the variability explained by the regression model.
+
+$$
+SSR = \sum(\hat Y_i-\bar Y)^2
+$$
+### e. Calculate the r^2 and explain the result
+
+The coefficient :
+$$
+R^2 = \frac{SSR}{SST}
+$$
+```{r}
+SSR <- sum((fitted(model) - mean(college_some$wage))^2)
+SST <- sum((college_some$wage - mean(college_some$wage))^2)
+
+R_squared <- SSR / SST
+```
+Because the $R^2$ value of 0.05566 indicates that approximately 5.566% of the total variability in wages among college graduates with some college education. the model explains just a small portion of the variability, and the majority of the variability  remains unexplained by the linear relationship with experience.
+
+###F
+```{r}
+# Calculate percentiles of experience
+percentiles <- quantile(college_some$exper, c(0.25, 0.50, 0.75))
+# Extract the expected values of wages at these percentiles
+expected_wages <- coef(model)[1] + coef(model)[2] * percentiles
+# Display the results
+cat("Experience at 25th percentile:", percentiles[1], "\n")
+cat("Expected Wage at 25th percentile:", expected_wages[1], "\n")
+cat("Experience at 50th percentile (median):", percentiles[2], "\n")
+cat("Expected Wage at 50th percentile (median):", expected_wages[2], "\n")
+cat("Experience at 75th percentile:", percentiles[3], "\n")
+cat("Expected Wage at 75th percentile:", expected_wages[3], "\n")
+```
+Experience at 25th percentile: 7 
+Experience at 75th percentile: 12 
+Expected Wage at 75th percentile: 1018.861
+Experience at 50th percentile (median): 10 
+Expected Wage at 25th percentile: 897.5193 
+Expected Wage at 50th percentile (median): 970.3245 
+
+
+## 6.
+
+### a. Calculate the OLS estimator for β1 (Slope)
+
+The OLS estimator for the slope :
+
+$$
+\hat{\beta}_1=\frac{\sum_{i=1}^n(X_i-\bar{X})(Y_i-\bar{Y})}{\sum_{i=1}^n(X_i-\bar{X})^2}
+$$
+```{r}
+age <- c(40, 35, 25, 50)
+earnings <- c(60, 45, 40, 55)
+mean_age <- mean(age)
+mean_earnings <- mean(earnings)
+numerator <- sum((age - mean_age) * (earnings - mean_earnings))
+denominator <- sum((age - mean_age)^2)
+beta1_hat <- numerator / denominator
+```
+
+OLS Estimator for beta1 (Slope): 0.6923077
+
+### b. Calculate the OLS estimator for β0 (Intercept):
+
+The OLS estimator for $\beta_0$ (the intercept):
+
+$$
+\hat{\beta}_0=\bar{Y}-\hat{\beta}_1\cdot\bar{X}
+$$
+```{r}
+beta0_hat <- mean_earnings - beta1_hat * mean_age
+```
+
+OLS Estimator for beta0 (Intercept): 24.03846 
+
+### c. Calculate the r^2 (Coefficient of Determination):
+
+The coefficient of determination (r^2) :
+$$
+R^2=\frac{\mathrm{SSR}}{\mathrm{SST}}
+$$
+```{r}
+SSR <- sum((beta0_hat + beta1_hat * age - mean_earnings)^2)
+
+SST <- sum((earnings - mean_earnings)^2)
+
+R_squared <- SSR / SST
+```
+R-squared: 0.6230769
+
+### d. Calculate the F statistic
+
+The F-statistics:
+$$
+F=\frac{\mathrm{SSR}/k}{\mathrm{SSE}/(n-k-1)}
+$$
+```{r}
+n <- length(age)
+k <- 1
+SSE <- SST - SSR
+F_statistic <- (SSR / k) / (SSE / (n - k - 1))
+```
+F-statistic: 3.306122
+
+### e. Calculate the OLS estimator for σ^2 (Residual Variance)
+
+The OLS estimator for $\sigma^2$(residual variance):
+
+$$
+\sigma^2 = \frac{SSE}{n-k-1}
+$$
+```{r}
+sigma_hat_squared <- SSE / (n - k - 1)
+```
+OLS Estimator for sigma^2 (Residual Variance): 47.11538
+
+### f. Find the standard error for $\hat{\beta}_1$ (Slope):
+
+The standard error for $\hat{\beta}_1$ :
+
+$$
+SE(\hat{\beta}_1)=\sqrt{\frac{\hat{\sigma}^2}{\sum_{i=1}^n(X_i-\bar{X})^2}}
+$$
+```{r}
+SE_beta1 <- sqrt(sigma_hat_squared / denominator)
+```
+Standard Error for beta1 (Slope): 0.3807498
+
+### g. Verify that the averages of actual and predicted earnings are the same
+
+```{r}
+predicted_earnings <- beta0_hat + beta1_hat * age
+mean_actual_earnings <- mean(earnings)
+mean_predicted_earnings <- mean(predicted_earnings)
+```
+Average of Predicted Earnings: 50 
+Average of Actual Earnings: 50 
+
+
+Because the average of actual earnings same as the average of predicted earnings, the model is great.
+
+### h. Verify that the sum of the residuals equals zero
+
+```{r}
+residuals <- earnings - predicted_earnings
+
+sum_residuals <- sum(residuals)
+```
+Sum of Residuals: -7.105427e-15
+The sum of residuals is 0, which is a well-specified model.
+
+### i. Verify that the residuals are uncorrelated with the regressor, Age
+```{r}
+cor_residuals_age <- cor(residuals, age)
+```
+Correlation between Residuals and Age: 1.015061e-16
+The correlation result indicate that the residuals are uncorrelated with the Age.
+
+### j. Verify that the residuals are uncorrelated with predicted earnings
+
+```{r}
+cor_residuals_predicted <- cor(residuals, predicted_earnings)
+```
+
+Correlation between Residuals and Predicted Earnings: 1.804542e-16 
+The correlation is approximately 0, which means the residuals are uncorrelated with predicted earnings.
+
+
+##7 Wooldridge 2.2: 
+Equation=(a0+bata0)*age*bata1+(u-a0)
+then new error e=u-a0
+so E(e)=0
+last, can get new intercept is a0+bata0, and the slope is stil beta1
+
+##8 Wooldridge 2.7:
+i. 
+if the condition of inc is an expectation, sqrt(inc) is constant.
+Because E(e|inc)=E(e)=0,then E(u|inc)=E(sqrt(inc)*e|inc)=sqrt(inc)*0
+
+ii.
+if the condition of inc is an variance, sqrt(inc) is constant.
+Because Var(e|inc)=sigma^2,then Var(u|inc)=Var(sqrt(inc)*e|inc)=sigma^2
+
+iii. 
+Low incoming families can't freely spend, Because they have to spend on food, rent,colth, and other necessities.Higner income families have more discretion, so they can choose more investing and saving.So the discretion think the wider variability in the field of saving among higer income family.
+
+
+
+
+
+
+
+
+
+
+
